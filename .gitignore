@@ -1,0 +1,8 @@
+# .env variables
+.env
+
+#.venv - virtual interpreter
+\.venv
+
+# Pycharm folder
+\.idea
