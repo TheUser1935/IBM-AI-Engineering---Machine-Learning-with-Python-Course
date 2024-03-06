@@ -3,6 +3,8 @@ import numpy as np
 import pandas as pd
 #scikit-learn contains a bunch of useful machine learning libraries
 from sklearn import linear_model
+#scikit-learn contain many useful functions for model evaluation and metrics
+from sklearn import metrics
 
 #Create a pandas data frame from the CSV file
 df = pd.read_csv("Support Files\FuelConsumption.csv")
@@ -145,3 +147,65 @@ plt.plot(train_x, regression.coef_[0][0]*train_x + regression.intercept_[0], '-r
 plt.xlabel("Engine size")
 plt.ylabel("Emission")
 plt.show()
+
+
+"""Evaluation
+We compare the actual values and predicted values to calculate the accuracy of a regression model. Evaluation metrics provide a key role in the development of a model, as it provides insight to areas that require improvement.
+
+There are different model evaluation metrics, lets use MSE here to calculate the accuracy of our model based on the test set: 
+* Mean Absolute Error: It is the mean of the absolute value of the errors. This is the easiest of the metrics to understand since it’s just average error.
+
+* Mean Squared Error (MSE): Mean Squared Error (MSE) is the mean of the squared error. It’s more popular than Mean Absolute Error because the focus is geared more towards large errors. This is due to the squared term exponentially increasing larger errors in comparison to smaller ones.
+
+* Root Mean Squared Error (RMSE). 
+
+* R-squared (R2) is not an error, but rather a popular metric to measure the performance of your regression model. It represents how close the data points are to the fitted regression line. The higher the R-squared value, the better the model fits your data. The best possible score is 1.0 and it can be negative (because the model can be arbitrarily worse).
+
+"""
+# METRICS TO EVALUATE:
+    # Mean Absolute Error (MAE) ---> It is the mean of the absolute value of the errors
+    # Residual Sum of Squares (MSE) ---> Mean Squared Error (MSE) is the mean of the squared error
+    # R2 Score (R2) ---> R-squared is not an error, but rather a popular metric to measure the performance of your regression model
+
+#We need to use our TEST slice of our data set to evaluate our model
+# Create an array of X values from our test set
+test_x = np.asanyarray(test_set[['ENGINESIZE']])
+# Create an array of y values from our test set
+test_y = np.asanyarray(test_set[['CO2EMISSIONS']])
+
+#Use the sklearn.linear_regression.LinearRegression.predict() method to make predictions on our test set Y values
+#predict(X) --> takes on input, X, where X is an array-like or sparse matrix of shape (n_samples, n_features) --- Our X array --- and returns an array of shape (n_samples, n_outputs) --- Predicted Y values ---
+#We will store the predicted values in a variable which can be used for our evaluations methods/functions
+test_y_predicted = regression.predict(test_x)
+
+#abs/absolute(x,out,where,kwargs)
+#numpy.abs/absolute(x (input array), out (array structure to output to, if not specified, a new array is created) OPTIONAL, where (array-like - this condition is broadcast over the input. At locations where the condition is True, the output array will be set to the ufunc result) OPTIONAL, **kwargs (dict - optional keyword parameters))
+
+#Put simply, Numpy absolute value calculates the absolute value of the values in a Numpy array. So let’s say we have some numbers in an array, some negative and some positive. If we apply Numpy absolute value, it will calculate the absolute value of every value in the array. The output of the function will be a new array with the absolute values
+#absolute meaning they become POSITIVE representations
+print("Engine Size vs CO2 emissions model evaluation: ")
+print("Mean absolute error: %.2f" % np.mean(np.absolute(test_y_predicted - test_y)))
+print("Residual sum of squares (MSE): %.2f" % np.mean((test_y_predicted - test_y) ** 2))
+print("R2-score: %.2f" % metrics.r2_score(test_y , test_y_predicted) )
+
+
+#---------- PRACTISE ABOVE USING COMBINED FUEL CONSUMPTION AGAINST CO2 EMISSIONS -----------
+
+train_x = np.asanyarray(training_set[['FUELCONSUMPTION_COMB']])
+train_y = np.asanyarray(training_set[['CO2EMISSIONS']])
+plt.scatter(train_x, train_y)
+plt.xlabel("FUELCONSUMPTION_COMB")
+plt.ylabel("CO2 Emissions")
+plt.show()
+regression.fit(train_x, train_y)
+plt.show()
+
+test_x = np.asanyarray(test_set[['FUELCONSUMPTION_COMB']])
+test_y = np.asanyarray(test_set[['CO2EMISSIONS']])
+
+test_y_predicted = regression.predict(test_x)
+
+print("Combined Fuel Consumption vs CO2 emissions model evaluation: ")
+print("Mean absolute error: %.2f" % np.mean(np.absolute(test_y_predicted - test_y)))
+print("Residual sum of squares (MSE): %.2f" % np.mean((test_y_predicted - test_y) ** 2))
+print("R2-score: %.2f" % metrics.r2_score(test_y , test_y_predicted) )
