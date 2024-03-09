@@ -1,13 +1,13 @@
 import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
-#scikit-learn contains a bunch of useful machine learning libraries
+#scikit-learn contains a bunch of useful machine learning libraries. Linear model contains LinearRegression and multiple linear regression
 from sklearn import linear_model
 #scikit-learn contain many useful functions for model evaluation and metrics
 from sklearn import metrics
 
 #Create a pandas data frame from the CSV file
-df = pd.read_csv("Support Files\FuelConsumption.csv")
+df = pd.read_csv("Machine Learning with Python\Support Files\FuelConsumption.csv")
 
 #Print the top lines of the CSV file we turned into a data frame to confrim its loaded
 print(df.head())
