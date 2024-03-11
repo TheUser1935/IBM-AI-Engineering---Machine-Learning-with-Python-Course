@@ -23,7 +23,8 @@ This file contains the notes I have taken during the course. I decided to add my
 
 - process of predicting a continuous value
 - Looks at independent variables (explanatory or causal) and how they impact the final state/goal/metric we try and predict
-  ![Overview](<Lesson Notes Images/Regression/overview.png>)
+
+![Overview](<Lesson Notes Images/Regression/overview.png>)
 
 - The dependent variable - or goal we try and predict has to be continuous, however, the independent variables can be continuous or categorical values
 
@@ -60,7 +61,7 @@ This file contains the notes I have taken during the course. I decided to add my
 
 - We can look at independent variables and identify one that we want to see if there is a linear relationship to the dependent variable we want to be able to predict
 - For instance, we can plot the engine size of cars against the amount of CO2 emissions to se eif there is a linear relationship
-  ![Simple Linear Regression Overview](<Lesson Notes Images/Regression/simple_Linear_Regression_Overview.png>)
+- ![Simple Linear Regression Overview](<Lesson Notes Images/Regression/simple_Linear_Regression_Overview.png>)
 
 - In the image above, we can see that as the engine size increases, there is an increase in the amount of CO2 emissions and we can draw a line through our data.
 - If the line we draw is accurate and a good measure of our data, we can use it to build a model to predict the amount of CO2 based upon an engine size
@@ -98,10 +99,10 @@ This file contains the notes I have taken during the course. I decided to add my
       \large \theta_0 = \=y -\theta_1 \=x
       $$
   - $\large \theta_0$ (theta 0) equation is much easier to understand once you have grasped the $\large \theta_1$ equation - This equation asks us for the AVERAGE of the y values, MINUS the $\large \theta_1$ value from its equation, MULTIPLIED by the AVERAGE value of x values
-    ![Estimate Params](<Lesson Notes Images/Regression/theta_estimate_params.png>)
+  - ![Estimate Params](<Lesson Notes Images/Regression/theta_estimate_params.png>)
 
   - We can then make a prediction of our dependent variable based upon the independent variable and use the equations shown above
-    ![Prediction with linear regression](<Lesson Notes Images/Regression/predict_with_params_simple.png>)
+  - ![Prediction with linear regression](<Lesson Notes Images/Regression/predict_with_params_simple.png>)
 
 ## Pros of linear regression
 
@@ -121,20 +122,25 @@ This file contains the notes I have taken during the course. I decided to add my
   - then we take a portion of that dataset, removing the actual dependent variable value and keeping the independent variable/s
   - With those independent variables, we then pass that into our model to carry out the predictions and compare the result to the ACTUAL values of the dependent variable
   - This will indicate how accurate our model actually is
-    ![Model Evaluation](<Lesson Notes Images/Regression/simple_lin_model_eval.png>)
-  ### Considerations of train and test on the same data set
-  - Will have High “training accuracy”(on the dataset it was trained on)
-  - Most likely have Low “out-of-sample-accuracy” (data that was not in the dataset that it was trained on)
-  ## Calculating the accuracy of a model
-  - There are a number of metrics to use to indicate accuracy, one of the simplest is comparing the values of model and actual values, as discussed above
-  - We can call this the _Error_ value
-  - $\large Error/Mean\space Absolute\space Error(MAE)=\frac{1}{n} \displaystyle\sum_{j=1}^n | y_j - \widehat y_j |$
-    - $\large y$ = Actual value of dependent variable
-    - $\large \widehat y$ = Predicted value of dependent variable
-    - All this equation really says is that for each row of data we want to SUBTRACT the PREDICTED y value, FROM the ACTUAL y value and record the SUM
-      - Then DIVIDE that sum by the NUMBER OF ROWS OF DATA used —> to give us the average metric of ERROR
-    - Essentially, it can be summarised as:
-      - calculate the average difference between predicted value and actual value from the sets of data tested
+
+![Model Evaluation](<Lesson Notes Images/Regression/simple_lin_model_eval.png>)
+
+### Considerations of train and test on the same data set
+
+- Will have High “training accuracy”(on the dataset it was trained on)
+- Most likely have Low “out-of-sample-accuracy” (data that was not in the dataset that it was trained on)
+
+## Calculating the accuracy of a model
+
+- There are a number of metrics to use to indicate accuracy, one of the simplest is comparing the values of model and actual values, as discussed above
+- We can call this the _Error_ value
+- $\large Error/Mean\space Absolute\space Error(MAE)=\frac{1}{n} \displaystyle\sum_{j=1}^n | y_j - \widehat y_j |$
+  - $\large y$ = Actual value of dependent variable
+  - $\large \widehat y$ = Predicted value of dependent variable
+  - All this equation really says is that for each row of data we want to SUBTRACT the PREDICTED y value, FROM the ACTUAL y value and record the SUM
+    - Then DIVIDE that sum by the NUMBER OF ROWS OF DATA used —> to give us the average metric of ERROR
+  - Essentially, it can be summarised as:
+    - calculate the average difference between predicted value and actual value from the sets of data tested
 
 ## What is training and out-of-sample accuracy?
 
@@ -154,7 +160,8 @@ This file contains the notes I have taken during the course. I decided to add my
   - Testing set
 - This allows us to train our model on the data we have but at the same time reserving some of the data to be tested on as out-of-sample
 - This allows us to carry out accuracy tests, like the error metric discussed before
-  ![Train/Test Split](<Lesson Notes Images/Regression/simp_lin_test_split.png>)
+
+![Train/Test Split](<Lesson Notes Images/Regression/simp_lin_test_split.png>)
 
 ![Train/Test Evaluation Approach](<Lesson Notes Images/Regression/simp_lin_test_split_eval.png>)
 
@@ -162,7 +169,9 @@ This file contains the notes I have taken during the course. I decided to add my
 
 - Set aside a percentage of the dataset to use for testing (e.g. first 25%), use the rest for training, then use the next group of percentage for testing and use the rest for training, keep repeating
   - Record the accuracy for each grouped testing, which can be used to calculate the average score
-    ![K-Fold Approach](<Lesson Notes Images/Regression/k-cross-fold-approach.png>)
+
+![K-Fold Approach](<Lesson Notes Images/Regression/k-cross-fold-approach.png>)
+
 - Each fold is unique, where no training data used in one fold is used in another
 - This method is essentially multiple rounds of Train/Test Split using the same dataset where each split is different
 
@@ -178,7 +187,8 @@ This file contains the notes I have taken during the course. I decided to add my
 ## What is an error of the model?
 
 - Error: measure of how far the data is from the fitted regression(trend) line
-  ![What is Error of Model](<Lesson Notes Images/Regression/simpl_lin_error_model.png>)
+
+![What is Error of Model](<Lesson Notes Images/Regression/simpl_lin_error_model.png>)
 
 - $\large Error/Mean\space Absolute\space Error(MAE)=\frac{1}{n} \displaystyle\sum_{j=1}^n | y_j - \widehat y_j |$
 - $\large Mean\space Squared\space Error(MSE)=\frac{1}{n} \displaystyle\sum_{j=1}^n ( y_j - \widehat y_j )^2$
@@ -227,12 +237,16 @@ This file contains the notes I have taken during the course. I decided to add my
   - We can also show it as a vector form:
     - $\huge \widehat y=0^TX$
     - $\large \theta ^T$ = Theta transposed
-      ![Multiple Regression Theta Transposed](<Lesson Notes Images/Regression/multiple_regr_theta_transposed.png>)
-    - X = the feature set. Being the components of the data. E.g X1 = engine size, X2 = num of cylinders, etc.
-      - The first element of the feature set is set to 1 because it turns the theta zero into the intercept or bias parameter
-        ![Multiple Regression X values Vector](<Lesson Notes Images/Regression/multiple_regr_x_values.png>)
-  - When $\large \theta ^TX$ is in a 1 dimensional space it is an equation of a line (like simple linear regression)
-    - In higher dimension, where we have more than 1 input, the line is called a plane or a hyper plane and this is what is used for multiple linear regression
+
+![Multiple Regression Theta Transposed](<Lesson Notes Images/Regression/multiple_regr_theta_transposed.png>)
+
+- X = the feature set. Being the components of the data. E.g X1 = engine size, X2 = num of cylinders, etc.
+  - The first element of the feature set is set to 1 because it turns the theta zero into the intercept or bias parameter
+
+![Multiple Regression X values Vector](<Lesson Notes Images/Regression/multiple_regr_x_values.png>)
+
+- When $\large \theta ^TX$ is in a 1 dimensional space it is an equation of a line (like simple linear regression)
+  - In higher dimension, where we have more than 1 input, the line is called a plane or a hyper plane and this is what is used for multiple linear regression
 
 ## Best fit plane/hyper plane Goal
 
@@ -250,14 +264,22 @@ This file contains the notes I have taken during the course. I decided to add my
 
 - We will work through using MSE to calculate errors, with the assumption we have already solved $\theta$ (theta) vector values
 - We can then use the feature sets (x values) to predict the dependent variable (y value) for a car
-  ![Multiple Regression Demo Data](<Lesson Notes Images/Regression/mult_lin_regr_start_data.png>)
+
+![Multiple Regression Demo Data](<Lesson Notes Images/Regression/mult_lin_regr_start_data.png>)
+
 - If we plug the feature sets values into our equation we find $\large \widehat y$ (predicted value)
-  ![Multiple Regression Demo Y Predicted](<Lesson Notes Images/Regression/mult_lin_regr_demo_y_pred.png>)
+
+![Multiple Regression Demo Y Predicted](<Lesson Notes Images/Regression/mult_lin_regr_demo_y_pred.png>)
+
 - We can then compare the ACTUAL value of $\large y_i$
-  ![Multiple Regression Demo Y Actual](<Lesson Notes Images/Regression/mult_lin_regr_demo_y_actual.png>)
+
+![Multiple Regression Demo Y Actual](<Lesson Notes Images/Regression/mult_lin_regr_demo_y_actual.png>)
+
 - We then find how DIFFERENT the predicted value is from the actual value (**residual error**)
   - $\large y_i -\widehat y_i$
-    ![Multiple Regression Demo Actual vs Predicted](<Lesson Notes Images/Regression/mult_lin_regr_demo_y_actual_vs_pred.png>)
+
+![Multiple Regression Demo Actual vs Predicted](<Lesson Notes Images/Regression/mult_lin_regr_demo_y_actual_vs_pred.png>)
+
 - The mean of all residual errors (for each row of x and y values) can show how bad the model is representing the data set - This is called the Mean Squared Error → which was discussed briefly earlier
 - $\large Mean\space Squared\space Error(MSE)=\frac{1}{n} \displaystyle\sum_{j=1}^n ( y_j - \widehat y_j )^2$
 
