@@ -338,4 +338,75 @@ This file contains the notes I have taken during the course. I decided to add my
 
 ---
 
-# K-Nearest Neighbours (Classification)
+# Introduction to Classification
+
+## What is Classification
+
+- It is a supervised learning approach
+- It consists of categorising some unknown items into a discrete set of categories or "classes"
+- Classificatio attempts to examine the relationship of a set of feature variables to a 'target' variable
+- The target variable is a categorical variable of discrete values
+
+### How does classification and classifiers work?
+
+Classification determines the class label for an unlabelled test case
+
+![Classification OVerview](<Lesson Notes Images/K-Nearest Neighbours - Classification/classification_overview_1.PNG>)
+
+## Demonstration - Bank wanting to know if loans will be repaid - Binary classifier with 2 classes
+
+We have a set of data of individuals that have previously defaulted on loans that contains feature variables (in this demo it includes things like: age, ed, employ, address, etc) that can be used to know if customers will likely have trouble paying off a loan.
+
+The goal of the model will be to predict whether the individual will default on the loan or not default on the loan. With this being represented as 1 or 0 in the targer variable column.
+
+![Bank Loan Default Model Demo](<Lesson Notes Images/K-Nearest Neighbours - Classification/bank_classification_demo_1.PNG>)
+
+## Multi-Class Classification
+
+Multi-class classification refers to the target variable consiting of multiple options. The example above simply had 1 or 0 as the potential target values, while this approach can handle multiple-classes.
+
+### Multi-Class Classification Demo - Patients of same illness taking different drugs
+
+This demo uses patient data of individuals that are being treated for an illness with varying drugs. The dataset contains features such as: age, sex, blood pressure, etc.
+
+The the target value is the type of drug which is most appropriate for the individual.
+
+We can make a model that can predict what drug should be used for future patients of the same illness.
+
+![Multi-Class Classification Demo](<Lesson Notes Images/K-Nearest Neighbours - Classification/multi-class_demo_drugs_1.PNG>)
+
+## Classification Use Cases
+
+There are many potential business use cases for classification. Some of these are:
+
+- Which category a customer belongs to?
+- Whether a customer switches to another brand/provider? (churn)
+- Whether a customer responds to a particular advertising campaign?
+
+Data classification has a wide range of applications in a variety of industries. Essentially, many problems can be expressed as association of feature and target variables, especially when labelled data is available.
+
+It can cover areas such as:
+
+- email filtering,
+- speech recognition,
+- image recognition,
+- handwriting recognition,
+- bio-metric identification,
+- document classification,
+- and so much more
+
+![Multi-Class Classification Use Cases](<Lesson Notes Images/K-Nearest Neighbours - Classification/multi-class_use_cases_1.PNG>)
+
+## Classification Algorithms in Machine Learning
+
+This course will only cover a few algorithms, there are many classification algorithms in the world to explore.
+
+- Decision Trees (ID3, C4.5, C5.0)
+- Naïve Bayes
+- Linear Discriminant Analysis
+- K-Nearest Neighbour
+- Logistic Regression
+- Neural Netwoeks
+- Suppoet Vector Machines (SVM)
+
+# K-Nearest Neighbours Algorithm (Classification)
