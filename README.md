@@ -6,7 +6,11 @@ This repository contains a series of my works, based upon the material covered i
 
 This material will also be an insight into my learning journey and for others to see my committment to upskilling in this area.
 
-## Libraries Used
+## Lesson Notes
+
+I have moved my notes into the Notes.md file found in this repository, from my personal notion notetaking. The intent is to provide a another aid for any learners, allow access to the notes from anywhere, as well as publicly show my learning approach.
+
+## Python Libraries Used
 
 This repository of Python Machine Learning Projects uses the following Python libraries:
 
