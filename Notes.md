@@ -61,7 +61,8 @@ This file contains the notes I have taken during the course. I decided to add my
 
 - We can look at independent variables and identify one that we want to see if there is a linear relationship to the dependent variable we want to be able to predict
 - For instance, we can plot the engine size of cars against the amount of CO2 emissions to se eif there is a linear relationship
-- ![Simple Linear Regression Overview](<Lesson Notes Images/Regression/simple_Linear_Regression_Overview.png>)
+
+![Simple Linear Regression Overview](<Lesson Notes Images/Regression/simple_Linear_Regression_Overview.png>)
 
 - In the image above, we can see that as the engine size increases, there is an increase in the amount of CO2 emissions and we can draw a line through our data.
 - If the line we draw is accurate and a good measure of our data, we can use it to build a model to predict the amount of CO2 based upon an engine size
@@ -99,10 +100,12 @@ This file contains the notes I have taken during the course. I decided to add my
       \large \theta_0 = \=y -\theta_1 \=x
       $$
   - $\large \theta_0$ (theta 0) equation is much easier to understand once you have grasped the $\large \theta_1$ equation - This equation asks us for the AVERAGE of the y values, MINUS the $\large \theta_1$ value from its equation, MULTIPLIED by the AVERAGE value of x values
-  - ![Estimate Params](<Lesson Notes Images/Regression/theta_estimate_params.png>)
 
-  - We can then make a prediction of our dependent variable based upon the independent variable and use the equations shown above
-  - ![Prediction with linear regression](<Lesson Notes Images/Regression/predict_with_params_simple.png>)
+![Estimate Params](<Lesson Notes Images/Regression/theta_estimate_params.png>)
+
+- We can then make a prediction of our dependent variable based upon the independent variable and use the equations shown above
+
+![Prediction with linear regression](<Lesson Notes Images/Regression/predict_with_params_simple.png>)
 
 ## Pros of linear regression
 
