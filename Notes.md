@@ -410,3 +410,161 @@ This course will only cover a few algorithms, there are many classification algo
 - Suppoet Vector Machines (SVM)
 
 # K-Nearest Neighbours Algorithm (Classification)
+
+## Intro to KNN (K-Nearest Neighbour)
+
+KNN is an algorithm we can use to predict a classification (dependent variable - Y value) by examing previously labelled independent variables (X values). In other words, it is a method for _classifying_ cases based upon their similarity to other cases.
+
+Cases that are near each other are referred to as _neighbours_.
+
+It is based on the paradigm that similar cases with same classification labels are near each other - thus, measuring the distances away from each other is a measure of their dissimilarity.
+
+There are a number of ways to measure the similarity, or the dissimilarity. This includes using [Euclidian Distance, Manhattan Distance, Minkowski.](https://www.kdnuggets.com/2023/03/distance-metrics-euclidean-manhattan-minkowski-oh.html) (Click on the link to read more about these distances) .
+
+![Eucldian, Manhattan, Minkowski](<Lesson Notes Images/K-Nearest Neighbours - Classification/c_distance_metrics_euclidean_manhattan_minkowski.png>)
+
+### Quick Process Overview
+
+![KNN Overview](<Lesson Notes Images/K-Nearest Neighbours - Classification/knn-intro-1.PNG>)
+
+The process involves looking at the values of the specified independent variables (X values) of the case that we are wanting to predict on, and looking at the N-th (e.g. 1st) closest value in the matching X columns and seeing what value they have in the Y variable (dependent variable) to determine what classification our NEW case should have for the Y value.
+
+![KNN Intro Demo-1](<Lesson Notes Images/K-Nearest Neighbours - Classification/knn-intro-demo-1.PNG>)
+
+## KNN Algorithm
+
+1. Pick a value for K
+2. Calculate the sistance of unknown cases from ALL cases
+3. Select the K-observations in the training data that are _"nearest"_ to the unknown data point.
+4. Predict the response of the unknown data point using the most popular response value from the k-nearest neighbours
+
+### Considerations of the value of K
+
+_K_ is the number of nearest neighbours to reference when examining X (independent values) and the associated classification derived for Y value (dependent variable).
+
+There is consideration to be given to how many neighbours to use in the algorithm because there is such a thing as too few, and too many.
+
+**Too Few**
+
+- If we were to only use the 1st closest neighbour, we are at risk because of the fact that the 1st neighbour may be a very specific case, or potentially an outlier in the data.
+- It can result in an overly complex model, which may lead to **_Overfitting_** of the model. Meaning it is not generalised enough to be used for out-of-sample data - or in simpler terms, it can't be trusted to predict unknown samples.
+
+**Too Many**
+
+- If we use too many neighbours, the model becomes overly generalised and increases in potential errors
+
+### Demonstration of K=1 and K=5
+
+In this image, we are using K=1 and we can see that the 1st closest neighbour that matches our X values suggests that we should have our Y value = '4. Total Service'
+
+![KNN Intro Demo-1K](<Lesson Notes Images/K-Nearest Neighbours - Classification/knn-intro-demo-1.PNG>)
+
+However, if we use K=5 we find that the majority of the 5 closest neighbours in X values suggests a different Y value.
+
+Using K=5, we actually have the Y value = '3: Plus Service'. And this makes much more sense then trusting just the first closest.
+
+![KNN Intro Demo-5K](<Lesson Notes Images/K-Nearest Neighbours - Classification/knn-intro-demo-2.PNG>)
+
+## Calculating the similarity/distance in a 1-dimesnional space
+
+We are calculating the distance/similarity between 2 customers with 1 feature (dimension) - being age. Using that data, we can use a few different equations to measure the distance.
+
+![Customer Data](<Lesson Notes Images/K-Nearest Neighbours - Classification/calc-sim-1-dim-data.PNG>)
+
+### Minkowski 1-Dimensional Space
+
+$\large Dis(x_1,x_2)=\sqrt {\sum^n_{1=0} (x_{1i} - x_{2i})^2}$
+
+$\large Dis(x_1,x_2)=\sqrt {(34 - 30)^2} = 4$
+
+**Breakdown**
+$x_1$ and $x_2$ represent the ages of the two customers. In this case, $x_1$ is the age of Customer 1 (which is 34), and $x_2$ is the age of Customer 2 (which is 30).
+
+$i$ is a symbol used to represent each individual component of the ages. Since we're dealing with 1-dimensional data (just one attribute, which is age), $i$ ranges from 0 to 1 in this case. It's just a way of keeping track of which component of the data we're currently looking at.
+
+So, when we see $x_{1i}$ and $x_{2i}$, these represent the respective components (or ages in this case) of Customer 1 and Customer 2 at the $i$th position. Since we only have one attribute (age), there's only one $i$, which takes the value 0.
+
+Think of $i$ as a counter or an index that helps us go through each individual component of the ages. In this specific case, since we're dealing with only one attribute (age), $i$ simply serves the purpose of distinguishing between the two ages.
+
+In more practical terms: When $i=0$, it refers to the first (and only) attribute, which is the age. So, $x_{1,0}$ would represent the age of Customer 1, and $x_{2,0}$ would represent the age of Customer 2.
+
+Since we only have one attribute, $i$ doesn't really change anything in this equation. It's just there as a formality to represent the dimensionality of the data.
+
+In essence, you can think of $i$ as a placeholder that allows us to generalize the equation for cases where we might have multiple attributes to compare, even though in this specific case it doesn't have a practical impact
+
+Putting it all together, the equation calculates the similarity between the ages of Customer 1 and Customer 2. It does this by taking the square root of the sum of the squared differences between each corresponding component of their ages. In simpler terms, it's like measuring how far apart their ages are by subtracting one age from the other, squaring the result (to make sure it's positive), adding up all those squared differences, and then taking the square root of the total. This gives us a single number representing the similarity or dissimilarity of their ages.
+
+## Calculating the similarity/distance in 2-dimensional space
+
+For this example, we still have 2 customers and their ages, however, we also now have their income.
+
+![2-Dimensions Cusotmer Data](<Lesson Notes Images/K-Nearest Neighbours - Classification/calc-sim-2-dim-data.PNG>)
+
+I turns out, we can actually re-use the same Monkowski equation but for a 2 dimensional space.
+
+$\large Dis(x_1,x_2)=\sqrt {\sum^n_{1=0} (x_{1i} - x_{2i})^2}$
+
+$\large Dis(x_1,x_2)=\sqrt {(34 - 30)^2 + (190 - 200)^2} = 10.77$
+
+**Breakdown**
+
+$x1$ and $x2$ still represent the attributes of the two customers, just like before. However, now we have two attributes: age and income.
+
+$i$ still serves as an index, but now it helps us distinguish between the different attributes (age and income) for each customer.
+
+$x_{1,i}$ and $x_{2,i}$ represent the respective components (age and income) of Customer 1 and Customer 2 at the $i$th position. When $i=0$, it refers to the age, and when $i=1$, it refers to the income.
+
+**_Comparing to the previous 1-dimensional equation_**:
+
+In the 1-dimensional equation, we only had one attribute (age), so $i$ didn't really change anything. It was just there as a formality.
+
+Now, with two attributes (age and income), $i$ becomes more meaningful. When $i=0$, it refers to the age, and when $i=1$, it refers to the income.
+
+So, in this example provided:
+
+- $x_{1,0}$ represents the age of Customer 1.
+- $x_{2,0}$ represents the age of Customer 2.
+- $x_{1,1}$ represents the income of Customer 1.
+- $x_{2,1}$ represents the income of Customer 2.
+
+The equation calculates the distance between the two customers considering both age and income. It squares the difference between each corresponding component, sums them up, and takes the square root of the total to get a single number representing the similarity or dissimilarity between the two customers.
+
+## Calculating the similarity in a multi-dimensional space
+
+After breaking down and understanding the Monkowski equation, we can actually apply the same logic we did from 1 dimension, to 2 dimension, and continue to apply across multiple attribute dimensions!
+
+We have laid the ground work to continue to scale up the number of dimensions.
+
+For this next example, we have 3 dimensions: Age, income, education.
+
+![3-Dimensions Customer Data](<Lesson Notes Images/K-Nearest Neighbours - Classification/calc-sim-3-dim-data.PNG>)
+
+$\large Dis(x_1,x_2)=\sqrt {\sum^n_{1=0} (x_{1i} - x_{2i})^2}$
+
+$\large Dis(x_1,x_2)=\sqrt {(34 - 30)^2 + (190 - 200)^2 + (3 - 8)^2} = 11.87$
+
+## Finding the Best Value for K
+
+As we discussed earlier, the value of K is incredibly important to avoid overfitting and over generalisation.
+
+So what can we do to find the appropriate value for K?
+
+### Approach to Find K
+
+1. Reserve a portion of your data to measure the accuracy of your model. Like what we did for Linear Regression.
+2. Choose K=1 and then use the training portion of the data to calculate the accuracy of prediciton using all samples in the test set
+3. Repeat this process, increasing K, and see which K value is best fit for your model
+
+## Computing Continuous Targets Using KNN
+
+KNN can also be used for regression.
+
+In this case, the average or median target value of the nearest neighbours is used to obtain the predicted value for the new case.
+
+### House Price Example
+
+We are looking to predict the price of a home based on its feature set, such as rooms, size, year it was built, etc.
+
+We can very easily find the 3 nearest neighbour houses, not just by distance, but also by the features/attributes we specify and then predict the house price as the median of the neighbours.
+
+# Evaluation Metrics in Classification
