@@ -568,3 +568,129 @@ We are looking to predict the price of a home based on its feature set, such as 
 We can very easily find the 3 nearest neighbour houses, not just by distance, but also by the features/attributes we specify and then predict the house price as the median of the neighbours.
 
 # Evaluation Metrics in Classification
+
+With an existing dataset of historical data, the approach to evaluating the accuracy of the model is very similar in principle to what we saw with linear regression.
+
+For each row of data that we predicited the target value of ($\widehat y$), we can compare it to the actual value of $y$.
+
+There are different model evaluation metrics, but this course will talk about 3:
+
+- Jaccard index
+- F1-score
+- Log loss
+
+## Jaccard Index
+
+$y$ = Actual values/labels
+$\widehat y$ = Predicted values/labels
+
+This method views the values of predicted values and actual values like a Venn diagram. Where the intersection of the predicted values circle and actual values circle represent the accuracy of the model.
+
+![Jaccard Venn Diagram](<Lesson Notes Images/K-Nearest Neighbours - Classification/jaccard-venn-overview-1.PNG>)
+
+The equation will produce an output ranging from 0.0, through to 1.0. Where a value of 1.0 is a perfect match and complete intersection of the two circles, while a score of 0.0 shows NO intersection of the two circles - meaning no matches at all.
+
+![Jaccard Venn Diagram vs Index](<Lesson Notes Images/K-Nearest Neighbours - Classification/jaccard-venn-scoring-overview.PNG>)
+
+### Jaccard Index Equation
+
+$\large j(y,\widehat y) = \huge \frac{|y \cap \widehat y|}{|y \cup \widehat y|} \large  = \huge \frac{|y \cap \widehat y|}{|y|+|\widehat y| - |y \cap \widehat y|}$
+
+<br/>
+
+![Jaccard Equation Demo](<Lesson Notes Images/K-Nearest Neighbours - Classification/jaccard-equation-demo-1.PNG>)
+
+**Breakdown**
+
+$y$ and $\widehat y$ represent two sets of elements. In many applications, these sets represent the actual labels or categories (ground truth) and the predicted labels or categories, respectively.
+
+$|y|$ represents the number of elements in set $y$, and $|\widehat y|$ represents the number of elements in set $\widehat y$.
+
+$|y \cap \widehat y|$ represents the number of elements that are common to both sets $y$ and $\widehat y$. This is the intersection of the two sets, meaning the elements that appear in both sets.
+
+$|y \cup \widehat y|$ represents the number of elements in the union of sets $y$ and $\widehat y$. This is the total number of unique elements in both sets combined.
+
+So, in simpler terms:
+
+The Jaccard index measures the similarity between two sets by comparing the number of elements they have in common to the total number of unique elements they contain.
+
+The numerator $|y \cap \widehat y|$ counts the common elements, while the denominator $y \cup \widehat y|$ counts all unique elements.
+
+Alternatively, the Jaccard index can be expressed as the size of the intersection divided by the size of the union, as shown in the equation.
+
+The second part of the equation, $|y| + |\widehat y| - |y \cap \widehat y|$, represents the total number of unique elements in both sets, taking into account the elements that are common to both sets only once.
+
+By dividing the size of the intersection by the size of the union, we get a measure of how similar the two sets are. The closer the Jaccard index is to 1, the more similar the sets are, while a value closer to 0 indicates less similarity.
+
+## F1-score (confusion Matrix)
+
+**_The F1-score appraoch can be used for more than 2 labels (binary), however, this will not be covered in this course._**
+
+![F1-score Overview](<Lesson Notes Images/K-Nearest Neighbours - Classification/f1-score-overview.PNG>)
+
+The F1-score evaluation appraoch, represents the $y$ (actual) values as rows, and the $\widehat y$ (predicted) values as columns.
+
+Counting the values across each row will highlight how many counts of that ACTUAL $y$ value there was in the dataset.
+
+The individual counts in the columns are what the model predicted -> $\widehat y$ for that value.
+
+This allows us to see how many correct predicitons were made for each possible $y$ value, and how many were wrong.
+
+For example, looking at the confusion matrix above, we can see that for the churn label 1 (top row) there was a total of 15 counts of this label in the data. The model correctly predicted 6 of these, but it also incorrectly predicted a label of 0 9 times - which is not good. If we look at the bottom row, whcih is chrun label 0, there was a total of 25 counts of this label in our dataset. The model correctly predicted 24 of those, however, it incorrectly predicted a label of 1 for one individual case - which is really good.
+
+Because we have correct predictions against correct values, as well as incorrect predicitons against real values - PLUS we are looking at it with binary of labels, we can convert each square in the matrix into the following:
+
+![F1-score Pos, Neg Labels](<Lesson Notes Images/K-Nearest Neighbours - Classification/f1-score-pos-neg-labels.PNG>)
+
+- TP = True Positive
+- FN = False Negative
+- FP - False Positive
+- TN = True Negative
+
+### Precision and Recall
+
+We can use the precision and recall operations for each possible label value (AKA row of the matrix) to help us calculate the F1-score for each label, _based upon the precision and recall of that label._
+
+**Precision**
+
+Precison is a measure of the accuracy, provided that a class label has been predicted.
+
+Precision = TP / (TP + FP)
+
+**Recall**
+
+Recall is the True Positive rate.
+
+Recall = TP / (TP + FN)
+
+**EXAMPLE FROM IMAGE**
+
+churn 0 -> Precision = 0.73, Recall = 0.96
+chrun 1 -> Precisoin = 0.86, Recall = 0.40
+
+### Calculate F1-score from Precisoin and Recall
+
+With the precision and recall values for each label identified, we can calculate the F1-score.
+
+The F1-score is the harmonic average of the precision and recall.
+
+**_F1-score = 2x (prc x rec) / (prc + rec)_**
+
+**The F1-score will return a value between 0.0 and 1.0, where the higher the number the higher the accuracy.**
+
+After calculating the F1-score for each class label, or $y$ label. We get the mean of the two scores to find the **_Average Accuracy_**.
+
+**EXAMPLE FROM IMAGE:**
+
+churn 0 -> Precision = 0.73, Recall = 0.96, f1-score = 0.83
+chrun 1 -> Precisoin = 0.86, Recall = 0.40, f1-score = 0.55
+
+**_Average Accuracy_** = (0.83 + 0.55) / 2 = 0.72
+
+**Harmonic Average:**
+
+The harmonic average is a way to find the average of numbers when you're dealing with rates or frequencies. It gives more weight to smaller numbers.
+
+In simple words, it's like finding a balance between different rates or frequencies, considering how much each one contributes, especially when some rates are small compared to others.
+
+## Log Loss
