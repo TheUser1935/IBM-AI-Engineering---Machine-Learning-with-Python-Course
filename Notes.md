@@ -284,7 +284,7 @@ This file contains the notes I have taken during the course. I decided to add my
 ![Multiple Regression Demo Actual vs Predicted](<Lesson Notes Images/Regression/mult_lin_regr_demo_y_actual_vs_pred.png>)
 
 - The mean of all residual errors (for each row of x and y values) can show how bad the model is representing the data set - This is called the Mean Squared Error → which was discussed briefly earlier
-- $\large Mean\space Squared\space Error(MSE)=\frac{1}{n} \displaystyle\sum_{j=1}^n ( y_j - \widehat y_j )^2$
+  $$\large Mean\space Squared\space Error(MSE)=\frac{1}{n} \displaystyle\sum_{j=1}^n ( y_j - \widehat y_j )^2$$
 
 ## How do we find the parameter or coefficients of multiple linear regression?
 
@@ -473,9 +473,9 @@ We are calculating the distance/similarity between 2 customers with 1 feature (d
 
 ### Minkowski 1-Dimensional Space
 
-$\large Dis(x_1,x_2)=\sqrt {\sum^n_{1=0} (x_{1i} - x_{2i})^2}$
+$$\large Dis(x_1,x_2)=\sqrt {\sum^n_{1=0} (x_{1i} - x_{2i})^2}$$
 
-$\large Dis(x_1,x_2)=\sqrt {(34 - 30)^2} = 4$
+$$\large Dis(x_1,x_2)=\sqrt {(34 - 30)^2} = 4$$
 
 **Breakdown**
 $x_1$ and $x_2$ represent the ages of the two customers. In this case, $x_1$ is the age of Customer 1 (which is 34), and $x_2$ is the age of Customer 2 (which is 30).
@@ -502,9 +502,9 @@ For this example, we still have 2 customers and their ages, however, we also now
 
 I turns out, we can actually re-use the same Monkowski equation but for a 2 dimensional space.
 
-$\large Dis(x_1,x_2)=\sqrt {\sum^n_{1=0} (x_{1i} - x_{2i})^2}$
+$$\large Dis(x_1,x_2)=\sqrt {\sum^n_{1=0} (x_{1i} - x_{2i})^2}$$
 
-$\large Dis(x_1,x_2)=\sqrt {(34 - 30)^2 + (190 - 200)^2} = 10.77$
+$$\large Dis(x_1,x_2)=\sqrt {(34 - 30)^2 + (190 - 200)^2} = 10.77$$
 
 **Breakdown**
 
@@ -539,9 +539,9 @@ For this next example, we have 3 dimensions: Age, income, education.
 
 ![3-Dimensions Customer Data](<Lesson Notes Images/K-Nearest Neighbours - Classification/calc-sim-3-dim-data.PNG>)
 
-$\large Dis(x_1,x_2)=\sqrt {\sum^n_{1=0} (x_{1i} - x_{2i})^2}$
+$$\large Dis(x_1,x_2)=\sqrt {\sum^n_{1=0} (x_{1i} - x_{2i})^2}$$
 
-$\large Dis(x_1,x_2)=\sqrt {(34 - 30)^2 + (190 - 200)^2 + (3 - 8)^2} = 11.87$
+$$\large Dis(x_1,x_2)=\sqrt {(34 - 30)^2 + (190 - 200)^2 + (3 - 8)^2} = 11.87$$
 
 ## Finding the Best Value for K
 
@@ -594,7 +594,7 @@ The equation will produce an output ranging from 0.0, through to 1.0. Where a va
 
 ### Jaccard Index Equation
 
-$\large j(y,\widehat y) = \huge \frac{|y \cap \widehat y|}{|y \cup \widehat y|} \large  = \huge \frac{|y \cap \widehat y|}{|y|+|\widehat y| - |y \cap \widehat y|}$
+$$\large j(y,\widehat y) = \huge \frac{|y \cap \widehat y|}{|y \cup \widehat y|} \large  = \huge \frac{|y \cap \widehat y|}{|y|+|\widehat y| - |y \cap \widehat y|}$$
 
 <br/>
 
@@ -642,10 +642,27 @@ Because we have correct predictions against correct values, as well as incorrect
 
 ![F1-score Pos, Neg Labels](<Lesson Notes Images/K-Nearest Neighbours - Classification/f1-score-pos-neg-labels.PNG>)
 
-- TP = True Positive
-- FN = False Negative
-- FP - False Positive
-- TN = True Negative
+**True Positive (TP):**
+
+- This happens when we correctly identify something as positive when it actually is positive.
+- For example, in medical testing, if someone has a disease and the test correctly identifies them as having the disease, that's a true positive.
+
+**False Negative (FN):**
+
+- This occurs when we wrongly classify something as negative when it's actually positive.
+- Using the medical testing example, if someone has a disease but the test says they don't, that's a false negative.
+
+**False Positive (FP):**
+
+- This happens when we incorrectly classify something as positive when it's actually negative.
+- In medical testing, if someone doesn't have a disease but the test incorrectly indicates they do, that's a false positive.
+
+**True Negative (TN):**
+
+- This occurs when we correctly identify something as negative when it actually is negative.
+- In the medical testing example, if someone doesn't have the disease and the test correctly says they don't, that's a true negative.
+
+The above image has the positive and negative labels set when assessing '_Churn = 1'_
 
 ### Precision and Recall
 
@@ -655,17 +672,22 @@ We can use the precision and recall operations for each possible label value (AK
 
 Precison is a measure of the accuracy, provided that a class label has been predicted.
 
-Precision = TP / (TP + FP)
+$Precision = \frac{TP}{(TP + FP)}$ for positive labels
+
+$Precision = \frac{TN}{(TN + FN)}$ for the negative/opposite labels
 
 **Recall**
 
 Recall is the True Positive rate.
 
-Recall = TP / (TP + FN)
+$Recall = \frac{TP}{(TP + FN)}$ for positive labels
+
+$Recall = \frac{TN}{(TN + FP)}$ for negative labels
 
 **EXAMPLE FROM IMAGE**
 
 churn 0 -> Precision = 0.73, Recall = 0.96
+
 chrun 1 -> Precisoin = 0.86, Recall = 0.40
 
 ### Calculate F1-score from Precisoin and Recall
@@ -674,7 +696,7 @@ With the precision and recall values for each label identified, we can calculate
 
 The F1-score is the harmonic average of the precision and recall.
 
-**_F1-score = 2x (prc x rec) / (prc + rec)_**
+$$\large F1\space score = \frac{2\times (precision \times recall)}{precision + recall}$$
 
 **The F1-score will return a value between 0.0 and 1.0, where the higher the number the higher the accuracy.**
 
@@ -694,3 +716,43 @@ The harmonic average is a way to find the average of numbers when you're dealing
 In simple words, it's like finding a balance between different rates or frequencies, considering how much each one contributes, especially when some rates are small compared to others.
 
 ## Log Loss
+
+Log loss, also known as logarithmic loss or cross-entropy loss, is a measure used to evaluate the performance of a classification model.
+
+Sometimes the output of a classifier is the **_Probability_** of a class label (y value), instead of the label. It assesses how well the probabilities predicted by the model match the actual binary outcomes
+
+For example, customer churn is binary labelled (yes/no or 1/0) where either a custom will leave or not. But we might be interested to know what the probability was for the model to assign the cusotmer the label.
+
+_Log loss measures the performance of a classifier where the predicted output is a probability value between 0 and 1_
+
+**What it assesses:**
+
+- Log loss quantifies the accuracy of the probabilities predicted by the model.
+- It penalizes models more heavily for confidently wrong predictions.
+- Lower log loss values indicate better performance, with 0 being the best possible score
+
+**In simpler terms:**
+
+- Imagine you're making bets on whether it will rain tomorrow or not, and you assign probabilities to each outcome (like 0.8 for rain and 0.2 for no rain).
+- Log loss measures how good you are at estimating these probabilities. If you're confident about rain and it doesn't rain, you'll get a high log loss. If you're confident and it does rain, your log loss will be low.
+- So, log loss helps assess how well a model's confidence aligns with reality
+
+This can be helpful in assessing performance of the model prediction because, like in the example below, we may have predicited a label of '1' but the probaility of that case receiving the assinged label is very low - 0.13 in the image below. This indicates a high log loss.
+
+![Log Loss Demo](<Lesson Notes Images/K-Nearest Neighbours - Classification/log-loss-demo.PNG>)
+
+### Calculating the Log Loss
+
+For each row in our dataset, we can use the following equation to calculate the log loss which measures how far away each prediciton is from the actual label:
+
+$$(y \times log(\widehat y)+(1-y)\times log(1-\widehat y))$$
+
+Then, we calculate the average log log across all the rows and losses:
+
+$$
+LogLoss = - \frac{1}{n} \sum (y \times log(\widehat y)+(1-y)\times log(1-\widehat y))
+$$
+
+<br/>
+
+![Logg Loss Equation Demo](<Lesson Notes Images/K-Nearest Neighbours - Classification/log-loss-equation-demo.PNG>)
