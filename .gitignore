@@ -2,11 +2,11 @@
 .env
 
 #.venv - virtual interpreter
-\.venv
+/.venv
 
 # Pycharm folder
-\.idea
+/.idea
 
 # Class Jupyter Notebooks
-\Course_Jupyter_Notebooks
+/Course_Jupyter_Notebooks/
 
