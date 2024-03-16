@@ -10,3 +10,5 @@
 # Class Jupyter Notebooks
 /Course_Jupyter_Notebooks/
 
+# Ignore teleCust1000t.csv because not sure if can share it
+/Support Files/teleCust1000t.csv
