@@ -16,5 +16,7 @@ This repository of Python Machine Learning Projects uses the following Python li
 
 1. numpy
 2. pandas
-3. scikit-learn
+3. scikit-learn (sklearn)
 4. matplotlib
+5. Dotenv
+6. os

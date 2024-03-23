@@ -5,24 +5,35 @@ import pandas as pd
 #Import the load_dotenv to allow us to use environment variables from the .env file of the project
 from dotenv import load_dotenv
 import os
+from sklearn import model_selection
+#Import the KNN classifier
+from sklearn.neighbors import KNeighborsClassifier
+from sklearn import metrics
 
 #load the .env variables
 load_dotenv()
 
-#use os.environ or os.getenv to access environment variables as if they are from ACTUAL enviornment and not .env file
-print(os.getenv("KNN_DATASET_URL"))
+#If - Else to control whre we load data from: URL or local file
 
-# import data
+#Local filepath to use
+                    #Use double slashes to escape the special characters being detected
+knn_dataset_filepath = "Machine Learning with Python\\Support Files\\teleCust1000t.csv"
 
-# Import from URL
-#df = pd.read_csv(os.getenv("KNN_DATASET_URL"))
+if os.path.exists(knn_dataset_filepath):
+    df = pd.read_csv(knn_dataset_filepath)
+else:
+    #URL filepath to use
+    #use os.environ or os.getenv to access environment variables as if they are from ACTUAL enviornment and not .env file
+    print(os.getenv("KNN_DATASET_URL"))
+    knn_dataset_url = os.getenv("KNN_DATASET_URL")
+    df = pd.read_csv(knn_dataset_url)
 
-#Use previously downloaded data file
-                #Use double slashes to escape the special characters being detected
-df = pd.read_csv("Machine Learning with Python\\Support Files\\teleCust1000t.csv")
+
 df.head()
 
 print(df.head())
+
+
 
 #Get a count of the different labels rom  the 'custcat' column
 print("Count of unique labels in 'custcat' field: ",df['custcat'].value_counts())
@@ -49,6 +60,14 @@ plt.show()
 # To use the Scikit-learn library, we need to convert the Pandas dataframe to a Numpy array
 X_values = df[['region', 'tenure','age', 'marital', 'address', 'income', 'ed', 'employ','retire', 'gender', 'reside']] .values  #.astype(float)
 
+#------------------------------------------------------------------------------------------------------------------
+#TESTING WITH ADJUSTED COLUMNS
+#X_values = df[['region','age', 'marital', 'ed', 'income', 'employ', 'gender', 'reside']] .values
+
+#WAS INTERSTING TO SEE HOW THE IDEAL K VALUE CHANGED BASED UPON THE COLUMNS, AS WELL AS HOW THE ACCURACY CHANGED - SUPRISINGLY, THE DIFFERENCE IN ACCURACY WAS LOWER THAN WHAT I THOUGHT AS I TESTED DIFFERENT COLUMNS
+#------------------------------------------------------------------------------------------------------------------
+
+
 #Print the first 5 rows to confirm the conversion and ensure the data is in the correct format
 print(X_values[0:5])
 
@@ -64,7 +83,14 @@ print(Y_values[0:5])
 
 """
 ----------------------------------------------------------------------------------
-NEED TO SEARCH AND INCLUDE WHAT IS ACTUALLY GOING ON IN THIS FUNCTION CALL TO UNDERSTAND HOW IT WORKS AND WHY THE VALUES CHANGE THE WAY THEY DO
+https://scikit-learn.org/stable/modules/generated/sklearn.preprocessing.StandardScaler.html#sklearn.preprocessing.StandardScaler
+
+fit() ---> Compute the mean and std to be used for later scaling
+transform() ---> Perform standardization by centering and scaling
+
+Centering and scaling happen independently on each feature by computing the relevant statistics on the samples in the training set. Mean and standard deviation are then stored to be used on later data using transform.
+
+Standardization of a dataset is a common requirement for many machine learning estimators: they might behave badly if the individual features do not more or less look like standard normally distributed data
 ----------------------------------------------------------------------------------
 """
 
@@ -72,3 +98,78 @@ X_values = preprocessing.StandardScaler().fit(X_values).transform(X_values.astyp
 
 #Display the first 5 rows to confirm the conversion and ensure the data is in the correct format
 print(X_values[0:5])
+
+
+"""
+SPLIT OUR DATASET UP INTO TRAIN AND TEST SETS
+
+sklearn.model_selection.train_test_split(*arrays, test_size=None, train_size=None, random_state=None, shuffle=True, stratify=None
+
+https://scikit-learn.org/stable/modules/generated/sklearn.model_selection.train_test_split.html#sklearn.model_selection.train_test_split
+
+"""
+X_train, X_test, y_train, y_test = model_selection.train_test_split( X_values, Y_values, test_size=0.2, random_state=4)
+
+print ('Train set: ', X_train.shape,  y_train.shape)
+print ('Test set: ', X_test.shape,  y_test.shape)
+
+#Define K value - the number of neighbours
+k_value = 4
+
+"""
+https://scikit-learn.org/stable/modules/generated/sklearn.neighbors.KNeighborsClassifier.html#sklearn-neighbors-kneighborsclassifier
+"""
+
+#Train Model
+trained_neighbours = KNeighborsClassifier(n_neighbors = k_value).fit(X_train,y_train)
+
+print("Trained Model: ", trained_neighbours)
+
+#Predict Y values of test set
+predicted_y_values = trained_neighbours.predict(X_test)
+
+print("Predicted Y values: ", predicted_y_values)
+print("Actual Y values: ", y_test)
+
+
+"""Accuracy evaluation
+
+In multilabel classification, **accuracy classification score** is a function that computes subset accuracy. This function is equal to the jaccard_score function. Essentially, it calculates how closely the actual labels and predicted labels are matched in the test set.
+"""
+print("Train set Accuracy: ", metrics.accuracy_score(y_train, trained_neighbours.predict(X_train)))
+print("Test set Accuracy: ", metrics.accuracy_score(y_test, predicted_y_values))
+
+#----------------------------------------------------------------------------------------------------------------------
+"""
+TO THIS POINT WE ONLY USED A HARDCODED VALUE FOR K AND WE WOULD HAVE TO MANUALLY GO BACK THROUGH AND CHANGE THIS AND RECORD THE ACCURACY FOR EACH K VALUE TO FIND THE BEST K VALUE TO USE
+
+WE CAN DO THIS PROGRAMMATICALLY WITH A FOR LOOP
+"""
+Ks = 10
+mean_acc = np.zeros((Ks-1))
+std_acc = np.zeros((Ks-1))
+
+for n in range(1,Ks):
+    
+    #Train Model and Predict  
+    neigh = KNeighborsClassifier(n_neighbors = n).fit(X_train,y_train)
+    yhat=neigh.predict(X_test)
+    mean_acc[n-1] = metrics.accuracy_score(y_test, yhat)
+
+    
+    std_acc[n-1]=np.std(yhat==y_test)/np.sqrt(yhat.shape[0])
+
+print("MEAN ACCURACY: ",mean_acc)
+
+#Create a plot of the accuracy values WITH STANDARD DEVIATION
+plt.plot(range(1,Ks),mean_acc,'g')
+plt.fill_between(range(1,Ks),mean_acc - 1 * std_acc,mean_acc + 1 * std_acc, alpha=0.10)
+plt.fill_between(range(1,Ks),mean_acc - 3 * std_acc,mean_acc + 3 * std_acc, alpha=0.10,color="green")
+plt.legend(('Accuracy ', '+/- 1xstd','+/- 3xstd'))
+plt.ylabel('Accuracy ')
+plt.xlabel('Number of Neighbors (K)')
+plt.tight_layout()
+plt.show()
+
+#Based on the console prinout and the visualisation, we can see the best value for K is:
+print( "The best accuracy was with", mean_acc.max(), "with k=", mean_acc.argmax()+1) 
