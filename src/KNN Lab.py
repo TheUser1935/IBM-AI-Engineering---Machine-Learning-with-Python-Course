@@ -131,6 +131,28 @@ predicted_y_values = trained_neighbours.predict(X_test)
 print("Predicted Y values: ", predicted_y_values)
 print("Actual Y values: ", y_test)
 
+#VISUALISE THE PREDICTINS VS THE ACTUAL VALUES
+plt.figure(figsize=(8, 6))
+plt.scatter(y_test, predicted_y_values, color='blue', label='Actual vs Predicted')
+plt.plot([min(y_test), max(y_test)], [min(y_test), max(y_test)], color='red', linestyle='--', label='Perfect Prediction')
+
+"""enumerate() is used to iterate over the pairs of actual and predicted values along with their indices.
+plt.annotate() is called within the loop to annotate each point on the scatter plot with its corresponding index label (str(i)).
+textcoords="offset points", xytext=(0,10) specifies that the annotation text should be offset by 10 points above the point being annotated for better readability."""
+# Annotate every nth point with its index label ----> Change this value to adjust the frequency of index labels
+n = 20
+# Annotate each point with its index label
+for i, (actual, predicted) in enumerate(zip(y_test, predicted_y_values)):
+    if i % n == 0:
+        plt.annotate(str(i), (actual, predicted), textcoords="offset points", xytext=(0,10), ha='center')
+    
+plt.title('Actual vs Predicted Values of y')
+plt.xlabel('Actual y')
+plt.ylabel('Predicted y')
+plt.legend()
+plt.grid(True)
+plt.show()
+
 
 """Accuracy evaluation
 
